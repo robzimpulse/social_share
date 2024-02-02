@@ -32,23 +32,24 @@
         NSString *attributionURL = call.arguments[@"attributionURL"];
         NSString *backgroundImage = call.arguments[@"backgroundImage"];
         NSString *backgroundVideo = call.arguments[@"backgroundVideo"];
-        
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-
         NSString *appId = call.arguments[@"appId"];
+
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSMutableArray *pasteboardItems = [NSMutableArray array];
+
         if ([backgroundTopColor isKindOfClass:[NSNull class]]) {
             NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
             NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
             appId = [dict objectForKey:@"FacebookAppID"];
         }
-        
-        NSData *imgShare;
-        if ( [fileManager fileExistsAtPath: stickerImage]) {
-           imgShare = [[NSData alloc] initWithContentsOfFile:stickerImage];
+
+        if (![stickerImage isKindOfClass:[NSNull class]]) {
+            NSData *imgShare;
+            if ( [fileManager fileExistsAtPath: stickerImage]) {
+                imgShare = [[NSData alloc] initWithContentsOfFile:stickerImage];
+                [pasteboardItems setObject:imgShare forKey:[NSString stringWithFormat:@"%@.stickerImage",destination]];
+            }
         }
-        
-        // Assign background image asset and attribution link URL to pasteboard
-        NSMutableDictionary *pasteboardItems = [[NSMutableDictionary alloc]initWithDictionary: @{[NSString stringWithFormat:@"%@.stickerImage",destination] : imgShare}];
         
         if (![backgroundTopColor isKindOfClass:[NSNull class]]) {
             [pasteboardItems setObject:backgroundTopColor forKey:[NSString stringWithFormat:@"%@.backgroundTopColor",destination]];
