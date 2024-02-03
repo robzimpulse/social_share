@@ -35,7 +35,7 @@
         NSString *appId = call.arguments[@"appId"];
 
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSMutableArray *pasteboardItems = [NSMutableArray array];
+        NSMutableDictionary *pasteboardItems = [[NSMutableDictionary alloc] init];
 
         if ([backgroundTopColor isKindOfClass:[NSNull class]]) {
             NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
