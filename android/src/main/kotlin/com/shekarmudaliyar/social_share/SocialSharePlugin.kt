@@ -80,6 +80,8 @@ class SocialSharePlugin:FlutterPlugin, MethodCallHandler, ActivityAware {
                 val file =  File(activeContext!!.cacheDir,stickerImage)
                 val stickerImageFile = FileProvider.getUriForFile(activeContext!!, activeContext!!.applicationContext.packageName + ".com.shekarmudaliyar.social_share", file)
                 intent.putExtra("interactive_asset_uri", stickerImageFile)
+                // Instantiate activity and verify it will resolve implicit intent
+                activity!!.grantUriPermission(appName, stickerImageFile, Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
             if (call.method == "shareFacebookStory") {
@@ -104,8 +106,7 @@ class SocialSharePlugin:FlutterPlugin, MethodCallHandler, ActivityAware {
             intent.putExtra("content_url", attributionURL)
             intent.putExtra("top_background_color", backgroundTopColor)
             intent.putExtra("bottom_background_color", backgroundBottomColor)
-            // Instantiate activity and verify it will resolve implicit intent
-            activity!!.grantUriPermission(appName, stickerImageFile, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
             if (activity!!.packageManager.resolveActivity(intent, 0) != null) {
                 activeContext!!.startActivity(intent)
                 result.success("success")
