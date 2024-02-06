@@ -29,9 +29,6 @@ import android.content.ContentValues
 
 import android.content.Context
 
-
-
-
 class SocialSharePlugin:FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var activity: Activity? = null
@@ -49,16 +46,13 @@ class SocialSharePlugin:FlutterPlugin, MethodCallHandler, ActivityAware {
 
         if (call.method == "shareInstagramStory" || call.method == "shareFacebookStory") {
 
-            val destination : String
             val appName : String
             val intentString : String
 
             if (call.method == "shareInstagramStory") {
-                destination = "com.instagram.sharedSticker"
                 appName = "com.instagram.android"
                 intentString = "com.instagram.share.ADD_TO_STORY"
             } else {
-                destination = "com.facebook.sharedSticker";
                 appName = "com.facebook.katana";
                 intentString = "com.facebook.stories.ADD_TO_STORY"
             }

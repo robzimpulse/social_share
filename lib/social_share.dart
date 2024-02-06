@@ -58,9 +58,11 @@ class SocialShare {
     var _backgroundResourcePath = backgroundResourcePath;
 
     if (Platform.isAndroid) {
-      var stickerFilename = "stickerAsset.png";
-      await reSaveImage(imagePath, stickerFilename);
-      _imagePath = stickerFilename;
+      if (imagePath != null) {
+        var stickerFilename = "stickerAsset.png";
+        await reSaveImage(imagePath, stickerFilename);
+        _imagePath = stickerFilename;
+      }
       if (backgroundResourcePath != null) {
         var backgroundImageFilename = backgroundResourcePath.split("/").last;
         await reSaveImage(backgroundResourcePath, backgroundImageFilename);
