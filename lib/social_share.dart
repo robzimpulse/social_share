@@ -9,7 +9,7 @@ class SocialShare {
 
   static Future<String?> shareInstagramStory({
     required String appId,
-    required String imagePath,
+    String? imagePath,
     String? backgroundTopColor,
     String? backgroundBottomColor,
     String? backgroundResourcePath,

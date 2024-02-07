@@ -44,9 +44,8 @@
         }
 
         if (![stickerImage isKindOfClass:[NSNull class]]) {
-            NSData *imgShare;
-            if ( [fileManager fileExistsAtPath: stickerImage]) {
-                imgShare = [[NSData alloc] initWithContentsOfFile:stickerImage];
+            if ([fileManager fileExistsAtPath: stickerImage]) {
+                NSData *imgShare = [[NSData alloc] initWithContentsOfFile:stickerImage];
                 [pasteboardItems setObject:imgShare forKey:[NSString stringWithFormat:@"%@.stickerImage",destination]];
             }
         }
