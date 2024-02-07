@@ -121,13 +121,17 @@
         NSString *urlSchemeTwitter = [NSString stringWithFormat:@"twitter://post?message=%@",captionText];
         NSString* urlTextEscaped = [urlSchemeTwitter stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSURL *urlSchemeSend = [NSURL URLWithString:urlTextEscaped];
-        if (@available(iOS 10.0, *)) {
-            [[UIApplication sharedApplication] openURL:urlSchemeSend options:@{} completionHandler:nil];
-            result(@"success");
+        
+        if ([[UIApplication sharedApplication] canOpenURL:urlSchemeSend]) {
+            if (@available(iOS 10.0, *)) {
+                [[UIApplication sharedApplication] openURL:urlSchemeSend options:@{} completionHandler:nil];
+                result(@"success");
+            } else {
+                result(@"error");
+            }
         } else {
             result(@"error");
         }
-    
     } else if ([@"shareSms" isEqualToString:call.method]) {
         NSString *msg = call.arguments[@"message"];
         NSString *urlstring = call.arguments[@"urlLink"];
